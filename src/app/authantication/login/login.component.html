@@ -1,0 +1,54 @@
+<img src="../../../assets/MY356MSG.svg" alt="" style="margin:auto; padding-top:10%; padding-bottom:10px; width:60%; ">
+<h2 class="mt-2 mb-4">WELCOME</h2>
+<h3 class="text-danger mt-3">Login as Receiver</h3>
+<form (ngSubmit)="onSigninAsReceiver(f2)" #f2="ngForm">
+  <div class="form-group">
+    <!-- <label for="email">Mail</label> -->
+    <input type="text" id="passcode" name="passcode" ngModel class="form-control" placeholder="Enter Your special PassCode">
+  </div>
+  <button class="btn btn-primary btn-block" type="submit" [disabled]="f2.value.passcode==''">Show me today's Message</button>
+</form>
+<hr>
+<form (ngSubmit)="onSigninAsSender(f)" #f="ngForm">
+  <div *ngIf="loginflag else mylogout">        
+      <h3 class="text-info">Login as Sender</h3>
+  <div class="form-group">
+    <input type="email" id="email" name="email" ngModel class="form-control" placeholder="Enter Your Email">
+  </div>
+  <div class="form-group">
+    <input type="password" id="password" name="password" ngModel class="form-control" placeholder="Enter Your Password">
+  </div>
+    <button class="btn btn-primary mr-4" type="submit" [disabled]="!f.valid" [innerHTML]="signtext"></button>
+    <button class="btn btn-outline-primary" type="button" (click)="gotoSignUp()">Sign Up <strong>Now</strong></button>
+  </div>
+  <ng-template #mylogout>
+    <button type="button" class="btn btn-block btn-outline-primary btn-lg mt-4" (click)="gotoMessageControl()">Go To Message Control</button>
+    <button type="button" class="btn btn-block btn-danger mt-4" (click)="logout()">Log Out</button>
+    
+  </ng-template>
+</form>
+
+<!-- <img src="../../../assets/MY356MSG.svg" alt="" style="margin:auto; padding-top:10%; padding-bottom:10px; width:60%; ">
+<h2 class="mt-2 mb-4">WELCOME</h2>
+<h3 class="text-danger mt-3">Login as Receiver</h3>
+<form>
+  <div class="form-group">
+    <!-- <label for="email">Mail</label> -->
+    <!-- <input type="text" id="passcode" name="passcode"  class="form-control" placeholder="Enter Your special PassCode">
+  </div>
+  <button class="btn btn-danger btn-block" type="submit">Show me</button>
+</form>
+<hr>
+<h3 class="text-info">Login as Sender</h3>
+<form >
+  <div class="form-group">
+    <input type="email" id="email" name="email"  class="form-control" placeholder="Enter Your Email">
+  </div>
+  <div class="form-group">
+    <input type="password" id="password" name="password"  class="form-control" placeholder="Enter Your Password">
+  </div>
+  <button class="btn btn-primary mr-4" type="submit" >Sign <strong>In</strong></button>
+  <button class="btn btn-outline-primary" type="button" (click)="gotoSignUp()">Sign Up <strong>Now</strong></button>
+  <button class="btn btn-info" type="button" (click)="TEST()">Test</button>
+  <button class="btn btn-info" type="button" (click)="getData()">getData</button>
+</form> -->
