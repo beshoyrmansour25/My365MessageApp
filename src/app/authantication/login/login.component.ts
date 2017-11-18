@@ -11,6 +11,7 @@ import { Http } from '@angular/http';
 export class LoginComponent implements OnInit {
   signtext = 'Sign <strong>In</strong>';
   loginflag = false;
+  passcode = '';
   constructor(
     private router: Router,
     private authService: AuthanticationService
@@ -26,13 +27,23 @@ export class LoginComponent implements OnInit {
     this.signtext = 'Signing <strong>In</strong> ....';
     const email = form.value.email;
     const password = form.value.password;
-    this.authService.login(email, password);
+    this.authService.login(email, password).then((res) => {
+      console.log(res);
+      this.router.navigate(['messages']);
+    }
+    ).catch(() =>
+      this.signtext = 'Signing <strong>In</strong>'
+      );
   }
   onSigninAsReceiver(form: NgForm) {
-    this.authService.PassCodeChker(form.value.passcode).then(
+    if (localStorage.getItem('PassCode')) {
+      this.passcode = localStorage.getItem('PassCode');
+    } else {
+      this.passcode = form.value.passcode;
+    }
+    this.authService.PassCodeChker(this.passcode).then(
       () => {
-        const passcode = form.value.passcode;
-        this.router.navigate(['/messages', passcode]);
+        this.router.navigate(['/messages', this.passcode]);
       }, () => {
         alert('invaid passCode');
       }

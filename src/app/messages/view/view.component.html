@@ -8,7 +8,7 @@
       <h4 class="card-title">Hello {{receiverName}} </h4>
       <p class="card-title lead"> <strong>{{senderName}}</strong> send us to say</p>
       <!-- <h2>{{passCode}}</h2> -->
-      <h3 class="card-text my-4 msg">{{todayMessage || 'No Data Found'}}</h3>
+      <h3 class="card-text my-4 msg" [innerHTML]="todayMessage"></h3>
       <div class="fixed-bottom py-2">          
         <a href="#" class="text-muted"><p class="card-text">Share this message</p></a>
         <a href="#" class="text-white" style="font-size:1.6em"><i class="fa fa-facebook px-3" aria-hidden="true"></i></a>

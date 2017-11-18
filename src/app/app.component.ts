@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
 export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private _location: Location,
-    private router: Router
+    public router: Router
   ) { }
 
   ngOnInit() {

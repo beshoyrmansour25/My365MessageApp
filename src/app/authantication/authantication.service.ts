@@ -9,6 +9,8 @@ import { Observable } from 'rxjs/Observable';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 import { environment } from '../../environments/environment';
+import { resolve } from 'url';
+import { reject } from 'q';
 // import 'rxjs/add/operator/toPromise';
 // import 'rxjs/add/operator/map';
 // import 'rxjs/add/operator/finally';
@@ -45,9 +47,7 @@ export class AuthanticationService {
           'PassCode': PassCode,
           'startDate': startDate,
           'messages': [
-            { 'content': 'message 0 text', 'viewDate': Date.now() },
-            { 'content': 'message 1 text', 'viewDate': Date.now() },
-            { 'content': 'message 2 text', 'viewDate': 0 }
+            // { 'content': 'dummy', 'viewDate': 0 },
           ]
         });
         // console.log(response);
@@ -59,24 +59,28 @@ export class AuthanticationService {
   }
 
   login(email: string, password: string) {
-    this.afAuth.auth.signInWithEmailAndPassword(email, password).then(
-      response => {
-        this.afAuth.auth.currentUser.getToken()
-          .then((token: string) => {
-            // this.getusers(email);
-            localStorage.setItem('token', token);
-            localStorage.setItem('email', email);
-            this.router.navigate(['messages']);
-          }
-          );
-      }
-    )
-      .catch(
-      error => {
-        alert('there is a problem !: ' + error.message);
-        console.log(error);
-      }
-      );
+    const promise = new Promise((resolve, reject) => {
+      this.afAuth.auth.signInWithEmailAndPassword(email, password).then(
+        response => {
+          this.afAuth.auth.currentUser.getToken()
+            .then((token: string) => {
+              // this.getusers(email);
+              localStorage.setItem('token', token);
+              localStorage.setItem('email', email);
+              resolve();
+            }
+            );
+        }
+      )
+        .catch(
+        error => {
+          alert('there is a problem !: ' + error.message);
+          console.log(error);
+          reject();
+        }
+        );
+    });
+    return promise;
   }
 
   logout() {

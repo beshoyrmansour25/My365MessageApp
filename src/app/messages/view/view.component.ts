@@ -68,8 +68,10 @@ export class ViewComponent implements OnInit {
               } else {
                 if (element.viewDate === 0) {
                   this.todayMessage = element.content;
-                  element.viewDate = Date.now();
-                  this.changeDate();
+                  if (!localStorage.getItem('email')) {
+                    element.viewDate = Date.now();
+                    this.changeDate();
+                  }
                   break;
                 }
               }

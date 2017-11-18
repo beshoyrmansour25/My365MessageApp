@@ -27,7 +27,9 @@ export class ControlComponent implements OnInit {
   private user: FirebaseListObservable<User[]>;
   private snap = '';
   private messages: any[] = [{ content: '', viewDate: 0 }];
+  spinner = false;
   ngOnInit() {
+    this.spinner = false;
     this.messageForm = this.formBuilder.group({
       'messageField': new FormControl('', Validators.required),
       'messages': new FormArray([])
@@ -40,6 +42,7 @@ export class ControlComponent implements OnInit {
       .once('child_added', function (snapshot) {
       }).then(snapshot => {
         this.snap = snapshot.key;
+        this.spinner = true;
       });
     this.messagesService.getMessages().subscribe((user: any) => {
       this.user = user[0];
@@ -48,6 +51,7 @@ export class ControlComponent implements OnInit {
       });
       this.msgCounter = this.userMessages.length;
       this.senderName = user[0].senderName;
+      localStorage.setItem('PassCode', user[0].PassCode);
       this.messageForm = this.formBuilder.group({
         messageField: '',
         messages: this.userMessages
