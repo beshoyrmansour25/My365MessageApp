@@ -41,11 +41,9 @@ export class LoginComponent implements OnInit {
     } else {
       this.passcode = form.value.passcode;
     }
-    this.authService.PassCodeChker(this.passcode).then(
-      () => {
-        this.router.navigate(['/messages', this.passcode]);
-      }, () => {
-        alert('invaid passCode');
+    this.authService.PassCodeChker(this.passcode).then(() => {
+      this.router.navigate(['messages/',this.passcode]);
+        // alert('invaid passCode');
       }
     );
   }
